@@ -1,8 +1,9 @@
+import { Title } from "@/components/ui/Title";
 
 export default function DashboardPage() {
   return (
     <div>
-      <h1>Dashboard</h1>
+      <Title title="Dashboard" />
       <div style={{ display: "flex", gap: 20 }}>
       </div>
     </div>

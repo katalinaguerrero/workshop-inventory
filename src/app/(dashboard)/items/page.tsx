@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useItems } from "@/hooks/useItems";
 import { ItemTable } from "@/components/items/ItemTable";
+import { Title } from "@/components/ui/Title";
 
 export default function ItemsPage() {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function ItemsPage() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Lista de herramientas e insumos</h1>
+       <Title title="Lista de herramientas e insumos"/>
     <ItemTable items={items}></ItemTable>
     </div>
   );

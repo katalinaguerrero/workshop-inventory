@@ -10,6 +10,7 @@ import { MovementTypeSelect } from "@/components/movements/MovementTypeSelect";
 import { ItemSelect } from "@/components/items/ItemSelect";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { Title } from "@/components/ui/Title";
 
 type MovementForm = {
   itemId: string;
@@ -54,7 +55,7 @@ export default function MovementsPage() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Registrar Movimientos</h1>
+      <Title className="text-xl font-bold pb-2" title="Registrar Movimientos"/>
 
       {/* FORM */}
       <form

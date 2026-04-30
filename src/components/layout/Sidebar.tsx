@@ -2,10 +2,10 @@ import Link from "next/link";
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 border-r bg-background p-6">
+    <aside className="w-64 border-black border-r bg-background p-6">
 
       <h2 className="text-xl font-bold mb-8">
-        Workshop
+        Inventario Industrial
       </h2>
 
       <nav className="flex flex-col gap-2">

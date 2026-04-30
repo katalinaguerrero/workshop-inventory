@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getItemById, updateItem } from "@/services/items.service";
 import { ItemForm } from "@/components/items/ItemForm";
 import type { Item } from "@/types/item";
+import { Title } from "@/components/ui/Title";
 
 export default function EditItemPage() {
   const router = useRouter();
@@ -40,9 +41,7 @@ export default function EditItemPage() {
 
   return (
     <div className="max-w-xl mx-auto p-6">
-      <h1 className="text-xl font-bold mb-4">
-        Editar Item
-      </h1>
+      <Title title="Editar Item" />
 
       <ItemForm
         initialData={item}

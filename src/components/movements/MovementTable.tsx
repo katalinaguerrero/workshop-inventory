@@ -9,12 +9,14 @@ import {
 } from "@/components/ui/Table";
 
 import { getMovementLabel } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type Props = {
   movements: Movement[];
 };
 
 export function MovementTable({ movements }: Props) {
+  const router = useRouter();
   if (movements.length === 0) {
     return (
       <div className="border rounded-xl p-6">
@@ -38,7 +40,9 @@ export function MovementTable({ movements }: Props) {
       <TableBody>
         {movements.map((movement) => (
           <TableRow key={movement.id}>
-            <TableCell>{movement.itemName}</TableCell>
+            <TableCell   onClick={() =>
+                router.push(`/items/${movement.itemId}`)
+              }>{movement.itemName}</TableCell>
 
             <TableCell>
               <span
@@ -58,7 +62,7 @@ export function MovementTable({ movements }: Props) {
               className="max-w-[220px] truncate"
               title={movement.reason}
             >
-              {movement.reason}
+              {movement.reason || "-"}
             </TableCell>
 
             <TableCell>

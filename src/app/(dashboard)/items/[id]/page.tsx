@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import type { Item } from "@/types/item";
 import { getItemById } from "@/services/items.service";
 import { Button } from "@/components/ui/Button";
+import { Title } from "@/components/ui/Title";
 
 export default function ItemDetailPage() {
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function ItemDetailPage() {
 
       {/* HEADER */}
       <div className="border rounded-xl p-6">
-        <h1 className="text-2xl font-bold">{item.name}</h1>
+        <Title title={item.name}/>
 
         <p className="text-muted-foreground">
           Stock: {item.stock}

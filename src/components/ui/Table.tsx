@@ -23,7 +23,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      "bg-muted/60 text-muted-foreground uppercase text-xs tracking-wide",
+      "uppercase text-xs tracking-wide bg-black text-white",
       className
     )}
     {...props}
@@ -38,7 +38,7 @@ const TableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("divide-y divide-border", className)}
+    className={cn("divide-y", className)}
     {...props}
   />
 ));
@@ -68,7 +68,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "px-4 py-3 text-left font-semibold text-foreground whitespace-nowrap",
+      "px-4 py-3 text-left whitespace-nowrap",
       className
     )}
     {...props}

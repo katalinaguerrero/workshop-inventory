@@ -30,6 +30,7 @@ export function MovementTable({ movements }: Props) {
           <TableHead>Item</TableHead>
           <TableHead>Tipo</TableHead>
           <TableHead>Cantidad</TableHead>
+          <TableHead>Razón</TableHead>
           <TableHead>Fecha</TableHead>
         </TableRow>
       </TableHeader>
@@ -42,7 +43,7 @@ export function MovementTable({ movements }: Props) {
             <TableCell>
               <span
                 className={`px-2 py-1 rounded text-xs font-medium ${
-                  movement.type === "IN"
+                  movement.type.toUpperCase() === "IN"
                     ? "bg-green-100 text-green-700"
                     : "bg-red-100 text-red-700"
                 }`}
@@ -52,6 +53,13 @@ export function MovementTable({ movements }: Props) {
             </TableCell>
 
             <TableCell>{movement.quantity}</TableCell>
+
+            <TableCell
+              className="max-w-[220px] truncate"
+              title={movement.reason}
+            >
+              {movement.reason}
+            </TableCell>
 
             <TableCell>
               {new Date(movement.createdAt).toLocaleString()}

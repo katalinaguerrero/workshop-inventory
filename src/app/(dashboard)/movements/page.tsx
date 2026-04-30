@@ -9,11 +9,13 @@ import { MovementTable } from "@/components/movements/MovementTable";
 import { MovementTypeSelect } from "@/components/movements/MovementTypeSelect";
 import { ItemSelect } from "@/components/items/ItemSelect";
 import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 type MovementForm = {
   itemId: string;
   type: MovementType | "";
   quantity: number;
+  reason: string;
 };
 
 export default function MovementsPage() {
@@ -24,6 +26,7 @@ export default function MovementsPage() {
     itemId: "",
     type: "",
     quantity: 1,
+    reason: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,18 +41,20 @@ export default function MovementsPage() {
     itemName: item?.name || "Unknown",
     type: form.type,
     quantity: form.quantity,
+    reason:form.reason
   });
 
   setForm({
     itemId: "",
     type: "",
     quantity: 1,
+    reason:"",
   });
 };
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Movements</h1>
+      <h1>Registrar Movimientos</h1>
 
       {/* FORM */}
       <form
@@ -77,8 +82,15 @@ export default function MovementsPage() {
             })
           }
         />
+      <Input value={form.reason} onChange={(e) =>
+            setForm({
+              ...form,
+              reason: String(e.target.value),
+            })
+          } placeholder="Razón" />
 
-        <button type="submit">Registrar</button>
+
+        <Button type="submit" >Registrar</Button>
       </form>
 
       {/* TABLE */}

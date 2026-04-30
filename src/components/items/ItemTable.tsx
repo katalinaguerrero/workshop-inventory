@@ -19,6 +19,10 @@ type Props = {
 export function ItemTable({ items }: Props) {
   const router = useRouter();
 
+  const handleRowClick = (id: string) => {
+    router.push(`/items/${id}`);
+  };
+
   return (
     <Table>
       <TableHeader>
@@ -43,8 +47,9 @@ export function ItemTable({ items }: Props) {
           items.map((item) => (
             <TableRow
               key={item.id}
-              onClick={() => router.push(`/items/${item.id}`)}
+              onClick={() => handleRowClick(item.id)}
               className="cursor-pointer hover:bg-muted/50 transition"
+              title="Ver detalle"
             >
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.stock}</TableCell>

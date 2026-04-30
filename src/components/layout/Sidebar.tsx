@@ -2,13 +2,35 @@ import Link from "next/link";
 
 export default function Sidebar() {
   return (
-    <aside style={{ width: 220, padding: 20 }}>
-      <h2>Workshop</h2>
+    <aside className="w-64 border-r bg-background p-6">
 
-      <nav style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <Link href="/dashboard">Dashboard</Link>
-        <Link href="/items">Items</Link>
-        <Link href="/movements">Movements</Link>
+      <h2 className="text-xl font-bold mb-8">
+        Workshop
+      </h2>
+
+      <nav className="flex flex-col gap-2">
+
+        <Link
+          href="/dashboard"
+          className="rounded px-3 py-2 hover:bg-muted"
+        >
+          Dashboard
+        </Link>
+
+        <Link
+          href="/items"
+          className="rounded px-3 py-2 hover:bg-muted"
+        >
+          Items
+        </Link>
+
+        <Link
+          href="/movements"
+          className="rounded px-3 py-2 hover:bg-muted"
+        >
+          Movements
+        </Link>
+
       </nav>
     </aside>
   );

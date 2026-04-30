@@ -7,16 +7,22 @@ import { ItemForm } from "@/components/items/ItemForm";
 import type { Item } from "@/types/item";
 
 export default function EditItemPage() {
-  const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
+  const params = useParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+
   const [item, setItem] = useState<Item | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
       if (!id) return;
+
+      setLoading(true);
       const data = await getItemById(id);
       setItem(data);
+      setLoading(false);
     };
 
     load();
@@ -24,12 +30,13 @@ export default function EditItemPage() {
 
   const handleSubmit = async (data: Omit<Item, "id">) => {
     if (!id) return;
-    console.log(item);
+
     await updateItem(id, data);
     router.push(`/items/${id}`);
   };
 
-  if (!item) return <div>Cargando...</div>;
+  if (loading) return <div>Cargando...</div>;
+  if (!item) return <div>Item no encontrado</div>;
 
   return (
     <div className="max-w-xl mx-auto p-6">

@@ -12,14 +12,13 @@ import {
 
 const itemsRef = collection(db, "items");
 
-// GET ALL
-export async function getItems(): Promise<Item[]> {
-  const snapshot = await getDocs(itemsRef);
+export async function getItems() {
+  const snapshot = await getDocs(collection(db, "items"));
 
   return snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
-  })) as Item[];
+  }));
 }
 // GET BY ID
 export async function getItemById(id: string): Promise<Item | null> {

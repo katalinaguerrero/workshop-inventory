@@ -4,3 +4,12 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const getMovementLabel = (type: "IN" | "OUT" | string) => {
+  const normalized = type.toUpperCase();
+
+  if (normalized === "IN") return "Entrada";
+  if (normalized === "OUT") return "Salida";
+
+  return type;
+};

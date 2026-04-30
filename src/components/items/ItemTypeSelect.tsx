@@ -14,7 +14,7 @@ export function ItemTypeSelect({ value, onChange }: Props) {
         const val = e.target.value as ItemType;
         onChange(val);
       }}
-      className="border rounded px-3 py-2 w-full"
+      className="border border-black rounded px-3 py-2 w-full"
     >
       <option value="">Selecciona tipo</option>
 

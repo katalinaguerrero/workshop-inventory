@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Ol_Chiki } from "next/font/google";
+import "./globals.css";
 
 const noto = Noto_Sans_Ol_Chiki({
   subsets: ["latin"],
@@ -19,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${noto.className} `}>
-      <body>{children}</body>
+      <body >{children}</body>
     </html>
   );
 }

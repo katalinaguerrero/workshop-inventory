@@ -3,7 +3,7 @@ export const ITEM_TYPES = [
   { value: "supply", label: "Insumo" },
 ] as const;
 
-export type ItemType = typeof ITEM_TYPES[number]["value"];
+export type ItemType = (typeof ITEM_TYPES)[number]["value"];
 
 export type ItemSpecification = {
   key: string;
@@ -13,6 +13,7 @@ export type ItemSpecification = {
 export type Item = {
   id: string;
   name: string;
+  description?: string;
   stock: number;
   type: ItemType;
   imgUrl?: string;

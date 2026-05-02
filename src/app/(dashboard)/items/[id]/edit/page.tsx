@@ -29,10 +29,10 @@ export default function EditItemPage() {
     load();
   }, [id]);
 
-  const handleSubmit = async (data: Omit<Item, "id">) => {
+  const handleSubmit = (data: unknown) => {
     if (!id) return;
 
-    await updateItem(id, data);
+    updateItem(id, data as Omit<Item, "id">);
     router.push(`/items/${id}`);
   };
 
@@ -40,7 +40,7 @@ export default function EditItemPage() {
   if (!item) return <div>Item no encontrado</div>;
 
   return (
-    <div className="max-w-xl mx-auto p-6">
+    <div className="max-w-full mx-auto p-6">
       <Title title="Editar Item" />
 
       <ItemForm

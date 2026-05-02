@@ -17,5 +17,6 @@ export type Item = {
   stock: number;
   type: ItemType;
   imgUrl?: string;
+  imgPublicId?: string;
   specifications?: ItemSpecification[];
 };

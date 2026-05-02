@@ -8,7 +8,7 @@ const Table = React.forwardRef<
   <div className="relative w-full overflow-auto rounded-lg ">
     <table
       ref={ref}
-      className={cn("w-full text-sm", className)}
+      className={cn("w-full text-sm border-collapse", className)}
       {...props}
     />
   </div>
@@ -52,7 +52,6 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border border-black",
       className
     )}
     {...props}
@@ -68,7 +67,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "px-4 py-3 text-left whitespace-nowrap",
+      "px-4 py-3 text-muted-foreground whitespace-nowrap border border-black",
       className
     )}
     {...props}
@@ -84,7 +83,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "px-4 py-3 text-muted-foreground whitespace-nowrap",
+      "px-4 py-3 text-left whitespace-nowrap border border-black",
       className
     )}
     {...props}

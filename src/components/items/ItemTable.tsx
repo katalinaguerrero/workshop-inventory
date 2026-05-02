@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/Table";
 
 import type { Item } from "@/types/item";
+import { getItemTypeLabel } from "@/lib/utils";
+import { FaBoxOpen, FaTools } from "react-icons/fa";
 
 type Props = {
   items: Item[];
@@ -29,6 +31,7 @@ export function ItemTable({ items }: Props) {
         <TableRow>
           <TableHead>Nombre</TableHead>
           <TableHead>Stock</TableHead>
+          <TableHead>Descripción</TableHead>
           <TableHead>Tipo</TableHead>
         </TableRow>
       </TableHeader>
@@ -53,7 +56,24 @@ export function ItemTable({ items }: Props) {
             >
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.stock}</TableCell>
-              <TableCell>{item.type}</TableCell>
+              <TableCell
+                className="max-w-[220px] truncate"
+                title={item.description}
+              >
+                {item.description || "-"}
+              </TableCell>
+
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  {item.type === "tool" ? (
+                    <FaTools className="text-gray-600" />
+                  ) : (
+                    <FaBoxOpen className="text-gray-600" />
+                  )}
+
+                  {getItemTypeLabel(item.type)}
+                </div>
+              </TableCell>
             </TableRow>
           ))
         )}

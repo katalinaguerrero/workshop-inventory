@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import type { Item } from "@/types/item";
 import { getItemById } from "@/services/items.service";
 import { Button } from "@/components/ui/Button";
 import { Title } from "@/components/ui/Title";
+import { getItemTypeLabel } from "@/lib/utils";
+import { FaBoxOpen, FaTools } from "react-icons/fa";
 
 export default function ItemDetailPage() {
   const router = useRouter();
@@ -33,40 +36,57 @@ export default function ItemDetailPage() {
   if (!item) return <div className="p-6">Item no encontrado</div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-
+    <div className="max-w-full mx-auto p-6 space-y-6">
       {/* HEADER */}
-      <div className="border rounded-xl p-6">
-        <Title title={item.name}/>
+      <div className="border border-black rounded-xl p-6 grid gap-3">
+        {/* IMAGE */}
+        {item.imgUrl && (
+          <div className="mb-4">
+            <div className="relative w-full max-w-sm h-96">
+              <Image
+                src={item.imgUrl}
+                alt={item.name}
+                fill
+                className="object-cover rounded-lg border"
+              />
+            </div>
+          </div>
+        )}
 
-        <p className="text-muted-foreground">
-          Stock: {item.stock}
-        </p>
+        <Title title={item.name} />
 
-        <p className="text-sm mt-1">
-          Tipo: {item.type}
-        </p>
+        <div className="border rounded-lg p-3 bg-muted/30">
+          <p className="text-xs text-muted-foreground font-bold"> Tipo</p>
+          <div className="flex items-center gap-2">
+            <p className="font-medium">{getItemTypeLabel(item.type)}</p>
+            {item.type === "tool" ? (
+              <FaTools className="text-gray-600" />
+            ) : (
+              <FaBoxOpen className="text-gray-600" />
+            )}
+          </div>
+        </div>
+        <div className="border rounded-lg p-3 bg-muted/30">
+          <p className="text-xs text-muted-foreground font-bold">
+            {" "}
+            Stock Disponible
+          </p>
+          <p className="font-medium">{item.stock}</p>
+        </div>
       </div>
 
       {/* SPECIFICATIONS */}
-      <div className="border rounded-xl p-6">
-        <h2 className="text-lg font-semibold mb-4">
-          Especificaciones
-        </h2>
+      <div className="border border-black rounded-xl p-6">
+        <h2 className="text-lg font-semibold mb-4">Especificaciones</h2>
 
         {item.specifications?.length ? (
           <div className="grid grid-cols-2 gap-3">
             {item.specifications.map((spec, index) => (
-              <div
-                key={index}
-                className="border rounded-lg p-3 bg-muted/30"
-              >
-                <p className="text-xs text-muted-foreground">
+              <div key={index} className="border rounded-lg p-3 bg-muted/30">
+                <p className="text-xs text-muted-foreground font-bold">
                   {spec.key}
                 </p>
-                <p className="font-medium">
-                  {spec.value}
-                </p>
+                <p className="font-medium">{spec.value}</p>
               </div>
             ))}
           </div>
@@ -77,9 +97,7 @@ export default function ItemDetailPage() {
         )}
       </div>
 
-      <Button onClick={() => router.push(`/items/${id}/edit`)}>
-        Editar
-      </Button>
+      <Button onClick={() => router.push(`/items/${id}/edit`)}>Editar</Button>
     </div>
   );
 }

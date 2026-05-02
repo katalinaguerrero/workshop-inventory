@@ -13,3 +13,10 @@ export const getMovementLabel = (type: "IN" | "OUT" | string) => {
 
   return type;
 };
+export const getItemTypeLabel = (type: "tool" | "supply" | string) => {
+  const normalized = type.toUpperCase();
+  if (normalized === "TOOL") return "Herramienta";
+  if (normalized === "SUPPLY") return "Insumos";
+
+  return type;
+};

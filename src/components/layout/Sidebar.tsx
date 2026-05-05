@@ -1,36 +1,70 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { AiFillDashboard, AiOutlineUnorderedList } from "react-icons/ai";
+import { FaTools } from "react-icons/fa";
+import { BiTransfer } from "react-icons/bi";
+import { TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarRightCollapseFilled } from "react-icons/tb";
 
 export default function Sidebar() {
-  return (
-    <aside className="w-64 border-black border-r bg-background p-6">
+  const [collapsed, setCollapsed] = useState(false);
 
-      <h2 className="text-xl font-bold mb-8">
-        Inventario Industrial
-      </h2>
+  return (
+    <aside
+      className={`border-r border-black bg-background p-6 transition-all duration-300 ${
+        collapsed ? "w-16" : "w-64"
+      }`}
+    >
+      {/* Toggle button */}
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        className={`mb-6 flex items-center border rounded hover:bg-muted h-10 ${
+          collapsed ? "justify-center w-full" : "justify-start px-3 w-full"
+        }`}
+      >
+        {collapsed ? (
+          <TbLayoutSidebarRightCollapseFilled />
+        ) : (
+          <TbLayoutSidebarLeftCollapseFilled />
+        )}
+      </button>
+
+      {/* Title */}
+      {!collapsed && (
+        <h2 className="text-xl font-bold mb-8">Inventario Industrial</h2>
+      )}
 
       <nav className="flex flex-col gap-2">
-
         <Link
           href="/dashboard"
-          className="rounded px-3 py-2 hover:bg-muted"
+          className={`rounded py-2 hover:bg-muted flex items-center ${
+            collapsed ? "justify-center" : "px-3 gap-3"
+          }`}
         >
-          Dashboard
+          <AiFillDashboard />
+          {!collapsed && "Dashboard"}
         </Link>
 
         <Link
           href="/items"
-          className="rounded px-3 py-2 hover:bg-muted"
+          className={`rounded py-2 hover:bg-muted flex items-center ${
+            collapsed ? "justify-center" : "px-3 gap-3"
+          }`}
         >
-          Items
+          <FaTools />
+          {!collapsed && "Items"}
         </Link>
 
         <Link
           href="/movements"
-          className="rounded px-3 py-2 hover:bg-muted"
+          className={`rounded py-2 hover:bg-muted flex items-center ${
+            collapsed ? "justify-center" : "px-3 gap-3"
+          }`}
         >
-          Movements
+          <BiTransfer />
+          {!collapsed && "Movements"}
         </Link>
-
       </nav>
     </aside>
   );

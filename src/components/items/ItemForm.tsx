@@ -175,7 +175,7 @@ export function ItemForm({ initialData, onSubmit }: Props) {
       {imagePreview && (
         <img
           src={imagePreview}
-          className="w-48 h-48 object-cover rounded border mt-2"
+          className="h-48 object-cover rounded border mt-2"
         />
       )}
 

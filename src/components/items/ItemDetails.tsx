@@ -8,12 +8,12 @@ export function ItemDetails({ item }: { item: Item }) {
 
       {/* IMAGE */}
       {item.imgUrl && (
-        <div className="relative w-48 h-48">
+        <div className="relative">
           <Image
             src={item.imgUrl}
             alt={item.name}
             fill
-            className="object-cover rounded border"
+            className=" rounded border"
           />
         </div>
       )}

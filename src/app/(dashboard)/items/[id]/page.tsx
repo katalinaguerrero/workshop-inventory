@@ -42,12 +42,12 @@ export default function ItemDetailPage() {
         {/* IMAGE */}
         {item.imgUrl && (
           <div className="mb-4">
-            <div className="relative w-full max-w-sm h-96">
+            <div className="relative h-96">
               <Image
                 src={item.imgUrl}
                 alt={item.name}
                 fill
-                className="object-cover rounded-lg border"
+                className="rounded-lg border"
               />
             </div>
           </div>

@@ -9,8 +9,11 @@ const noto = Noto_Sans_Ol_Chiki({
 
 
 export const metadata: Metadata = {
-  title: "Industrial Workshop Inventory",
+  title: "Inventario Industrial",
   description: "Created by Katalina Guerrero",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

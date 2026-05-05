@@ -20,7 +20,7 @@ export default function Navbar() {
         />
 
         <h1 className="text-lg font-bold">
-          Inventario Liceo Industrial Puerto Montt
+          Inventario Mécanica Industrial
         </h1>
       </div>
 

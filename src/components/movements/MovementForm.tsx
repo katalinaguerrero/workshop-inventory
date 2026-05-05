@@ -3,97 +3,124 @@
 import { useState } from "react";
 import type { Item } from "@/types/item";
 import type { MovementType } from "@/types/movement";
-import { Button } from "@/components/ui/Button";
+
+import { ItemSelect } from "@/components/items/ItemSelect";
+import { MovementTypeSelect } from "@/components/movements/MovementTypeSelect";
 import { Input } from "@/components/ui/Input";
-import { Spinner } from "../ui/Spinner";
+import { Button } from "@/components/ui/Button";
+import { Spinner } from "@/components/ui/Spinner";
+import { Title } from "../ui/Title";
+
+type MovementFormState = {
+  itemId: string;
+  type: MovementType | "";
+  quantity: number;
+  reason: string;
+};
 
 type Props = {
   items: Item[];
-  onSubmit: (
-    itemId: string,
-    type: MovementType,
-    quantity: number
-  ) => Promise<void>;
+  onSubmit: (data: {
+    itemId: string;
+    itemName: string;
+    type: MovementType;
+    quantity: number;
+    reason: string;
+  }) => Promise<void>;
 };
 
-export function MovementForm({
-  items,
-  onSubmit,
-}: Props) {
-  const [itemId, setItemId] = useState("");
-  const [type, setType] = useState<MovementType>("IN");
-  const [quantity, setQuantity] = useState(0);
-  const [loading, setLoading] = useState(false);
+export function MovementForm({ items, onSubmit }: Props) {
+  const [submitting, setSubmitting] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const [form, setForm] = useState<MovementFormState>({
+    itemId: "",
+    type: "",
+    quantity: 1,
+    reason: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!itemId || quantity <= 0) return;
+    if (!form.itemId || !form.type || form.quantity <= 0) return;
+
+    const item = items.find((i) => i.id === form.itemId);
 
     try {
-      setLoading(true);
+      setSubmitting(true);
 
-      await onSubmit(itemId, type, quantity);
+      await onSubmit({
+        itemId: form.itemId,
+        itemName: item?.name || "Unknown",
+        type: form.type,
+        quantity: form.quantity,
+        reason: form.reason,
+      });
 
-      setQuantity(1);
-      setItemId("");
-      setType("IN");
+      setForm({
+        itemId: "",
+        type: "",
+        quantity: 1,
+        reason: "",
+      });
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="border rounded-xl p-6 space-y-4 bg-background"
-    >
-      <h2 className="text-lg font-semibold">Nuevo Movimiento</h2>
+    <>
+    <div className="flex justify-between">
+      <Title title="Registrar Movimientos" />
+      {" "}
+      <div className="flex items-center justify-end mb-3">
+        <Button
+          type="button"
+          onClick={() => setCollapsed(!collapsed)}
+          className="text-sm"
+        >
+          {collapsed ? "Abrir Formulario de Ingreso" : "Ocultar Formulario de Ingreso"}
+        </Button>
+      </div>
+    </div>
+      {!collapsed && (<form onSubmit={handleSubmit} className="flex gap-3 mb-6 flex-wrap">
+        <p>Herramienta / Insumo</p>
+        <ItemSelect
+          items={items}
+          value={form.itemId}
+          onChange={(val) => setForm({ ...form, itemId: val })}
+        />
+        <p>Entrada / Salida</p>
+        <MovementTypeSelect
+          value={form.type}
+          onChange={(val) => setForm({ ...form, type: val })}
+        />
+        <p>Cantidad</p>
+        <Input
+          type="number"
+          min={1}
+          value={form.quantity}
+          onChange={(e) =>
+            setForm({ ...form, quantity: Number(e.target.value) })
+          }
+        />
+        <p>Razón</p>
+        <Input
+          value={form.reason}
+          onChange={(e) => setForm({ ...form, reason: e.target.value })}
+          placeholder="Razón"
+        />
 
-      {/* ITEM */}
-      <select
-        value={itemId}
-        onChange={(e) => setItemId(e.target.value)}
-        className="border rounded px-3 py-2 w-full"
-      >
-        <option value="">Selecciona item</option>
-
-        {items.map((item) => (
-          <option key={item.id} value={item.id}>
-            {item.name} ({item.stock})
-          </option>
-        ))}
-      </select>
-
-      {/* TYPE */}
-      <select
-        value={type}
-        onChange={(e) => setType(e.target.value as MovementType)}
-        className="border rounded px-3 py-2 w-full"
-      >
-        <option value="in">Entrada</option>
-        <option value="out">Salida</option>
-      </select>
-
-      {/* QUANTITY */}
-      <Input
-        type="number"
-        min={0}
-        value={quantity}
-        onChange={(e) => setQuantity(Number(e.target.value))}
-      />
-
-      <Button
-        type="submit"
-        disabled={loading}
-        className="flex items-center gap-2"
-      >
-        {loading && <Spinner />}
-        {loading ? "Guardando..." : "Registrar Movimiento"}
-      </Button>
-
-    </form>
+        <Button
+          type="submit"
+          disabled={submitting}
+          className="flex items-center gap-2"
+        >
+          {submitting && <Spinner />}
+          {submitting ? "Guardando..." : "Registrar"}
+        </Button>
+      </form>)}
+    </>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Item, ItemSpecification } from "@/types/item";
+import type { Item, ItemFormData, ItemSpecification } from "@/types/item";
+
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { ItemTypeSelect } from "./ItemTypeSelect";
@@ -12,11 +13,8 @@ import { uploadImageToCloudinary } from "@/services/cloudinary/uploadImage";
 import { deleteImage } from "@/services/cloudinary/deleteImage";
 
 type Props = {
-  initialData?: (Omit<Item, "id"> & {
-    imgUrl?: string;
-    imgPublicId?: string;
-  });
-  onSubmit: (data: unknown) => void;
+  initialData?: ItemFormData;
+  onSubmit: (data: ItemFormData) => Promise<void> | void;
 };
 
 export function ItemForm({ initialData, onSubmit }: Props) {
@@ -37,8 +35,7 @@ export function ItemForm({ initialData, onSubmit }: Props) {
 
   // INIT EDIT DATA
   useEffect(() => {
-    if (!initialData) return;
-    if (hydrated.current) return;
+    if (!initialData || hydrated.current) return;
 
     setName(initialData.name);
     setStock(initialData.stock);
@@ -67,20 +64,28 @@ export function ItemForm({ initialData, onSubmit }: Props) {
     setSpecifications((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // blob preview
+  useEffect(() => {
+    return () => {
+      if (imagePreview?.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   // SUBMIT
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!type) return;
+
     setLoading(true);
 
     try {
-      if (!type) return;
-
       let imageUrl = initialData?.imgUrl || "";
       let publicId = initialData?.imgPublicId || "";
 
-      // si hay nueva imagen
       if (imageFile) {
-        // borrar anterior si existe
         if (existingPublicId) {
           await deleteImage(existingPublicId);
         }
@@ -176,7 +181,7 @@ export function ItemForm({ initialData, onSubmit }: Props) {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={imagePreview}
-          alt="Vista previa de imagen subida"
+          alt="preview"
           className="h-48 object-cover rounded border mt-2"
         />
       )}

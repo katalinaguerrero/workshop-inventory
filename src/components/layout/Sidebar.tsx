@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { AiFillDashboard, AiOutlineUnorderedList } from "react-icons/ai";
+import { AiFillDashboard } from "react-icons/ai";
 import { FaTools } from "react-icons/fa";
 import { BiTransfer } from "react-icons/bi";
 import { TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarRightCollapseFilled } from "react-icons/tb";
@@ -48,7 +48,7 @@ export default function Sidebar() {
           }`}
         >
           <FaTools />
-          {!collapsed && "Items"}
+          {!collapsed && "Herramientas"}
         </Link>
 
         <Link
@@ -58,7 +58,7 @@ export default function Sidebar() {
           }`}
         >
           <BiTransfer />
-          {!collapsed && "Movements"}
+          {!collapsed && "Movimientos"}
         </Link>
       </nav>
     </aside>

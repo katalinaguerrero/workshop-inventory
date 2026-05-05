@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useItems } from "@/hooks/useItems";
 import { ItemTable } from "@/components/items/ItemTable";
 import { Title } from "@/components/ui/Title";
+import { Button } from "@/components/ui/Button";
 
 export default function ItemsPage() {
   const router = useRouter();
@@ -13,9 +14,18 @@ export default function ItemsPage() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div style={{ padding: 20 }}>
-       <Title title="Lista de herramientas e insumos"/>
-    <ItemTable items={items}></ItemTable>
+    <div className="p-6 space-y-4">
+      {/* HEADER */}
+      <div className="flex items-center justify-between">
+        <Title title="Lista de herramientas e insumos" />
+
+        <Button onClick={() => router.push("/items/new")}>
+          + Nueva Herramienta / Insumo
+        </Button>
+      </div>
+
+      {/* TABLE */}
+      <ItemTable items={items} />
     </div>
   );
 }

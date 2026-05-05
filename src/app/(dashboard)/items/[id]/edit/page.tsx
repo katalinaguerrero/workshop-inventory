@@ -36,6 +36,7 @@ export default function EditItemPage() {
     router.push(`/items/${id}`);
   };
 
+
   if (loading) return <div>Cargando...</div>;
   if (!item) return <div>Item no encontrado</div>;
 

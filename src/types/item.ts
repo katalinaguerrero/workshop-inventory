@@ -20,3 +20,7 @@ export type Item = {
   imgPublicId?: string;
   specifications?: ItemSpecification[];
 };
+export type ItemFormData = Omit<Item, "id"> & {
+  imgUrl?: string;
+  imgPublicId?: string;
+};

@@ -11,6 +11,7 @@ import { ItemSelect } from "@/components/items/ItemSelect";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Title } from "@/components/ui/Title";
+import { Spinner } from "@/components/ui/Spinner";
 
 type MovementForm = {
   itemId: string;
@@ -21,41 +22,47 @@ type MovementForm = {
 
 export default function MovementsPage() {
   const { items } = useItems();
-  const { movements, addMovement } = useMovements();
-
+  const { movements, loading, addMovement } = useMovements();
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<MovementForm>({
     itemId: "",
     type: "",
     quantity: 1,
     reason: "",
   });
-
+  if (loading) return <p>Cargando Moviemientos...</p>;
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!form.itemId || !form.type) return;
+    if (!form.itemId || !form.type || form.quantity <= 0) return;
 
-  const item = items.find((i) => i.id === form.itemId);
+    const item = items.find((i) => i.id === form.itemId);
 
-  await addMovement({
-    itemId: form.itemId,
-    itemName: item?.name || "Unknown",
-    type: form.type,
-    quantity: form.quantity,
-    reason:form.reason
-  });
+    try {
+      setSubmitting(true);
 
-  setForm({
-    itemId: "",
-    type: "",
-    quantity: 1,
-    reason:"",
-  });
-};
+      await addMovement({
+        itemId: form.itemId,
+        itemName: item?.name || "Unknown",
+        type: form.type,
+        quantity: form.quantity,
+        reason: form.reason,
+      });
+
+      setForm({
+        itemId: "",
+        type: "",
+        quantity: 1,
+        reason: "",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div style={{ padding: 20 }}>
-      <Title className="text-xl font-bold pb-2" title="Registrar Movimientos"/>
+      <Title className="text-xl font-bold pb-2" title="Registrar Movimientos" />
 
       {/* FORM */}
       <form
@@ -83,15 +90,25 @@ export default function MovementsPage() {
             })
           }
         />
-      <Input value={form.reason} onChange={(e) =>
+        <Input
+          value={form.reason}
+          onChange={(e) =>
             setForm({
               ...form,
               reason: String(e.target.value),
             })
-          } placeholder="Razón" />
+          }
+          placeholder="Razón"
+        />
 
-
-        <Button type="submit" >Registrar</Button>
+        <Button
+          type="submit"
+          disabled={submitting}
+          className="flex items-center gap-2"
+        >
+          {submitting && <Spinner />}
+          {submitting ? "Guardando..." : "Registrar Movimiento"}
+        </Button>
       </form>
 
       {/* TABLE */}

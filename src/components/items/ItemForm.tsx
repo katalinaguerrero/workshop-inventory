@@ -173,8 +173,10 @@ export function ItemForm({ initialData, onSubmit }: Props) {
       />
 
       {imagePreview && (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={imagePreview}
+          alt="Vista previa de imagen subida"
           className="h-48 object-cover rounded border mt-2"
         />
       )}

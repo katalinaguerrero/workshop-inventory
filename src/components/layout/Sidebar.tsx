@@ -30,11 +30,6 @@ export default function Sidebar() {
         )}
       </button>
 
-      {/* Title */}
-      {!collapsed && (
-        <h2 className="text-xl font-bold mb-8">Inventario Industrial</h2>
-      )}
-
       <nav className="flex flex-col gap-2">
         <Link
           href="/dashboard"
